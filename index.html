@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PAYMENT Pembayaran</title>
+  <style>
+    :root{
+      --bg:#000;
+      --accent:#7b5cff;
+      --glow:#4dc3ff;
+      --text:#cce6ff;
+      --muted:#a8cfe8;
+      --card-bg: rgba(30,6,50,0.65);
+      --glass: rgba(12,12,20,0.55);
+      --radius:12px;
+    }
+    html,body{
+      height:100%; margin:0;
+      font-family:"Segoe UI", Roboto, monospace;
+      background:var(--bg); color:var(--text);
+      overflow-x:hidden;
+    }
+    body{
+      display:flex; align-items:flex-start; justify-content:center;
+      padding:20px; box-sizing:border-box;
+    }
+    main{width:100%; max-width:420px; text-align:center; position:relative; z-index:1;}
+
+    h1{font-size:22px; margin-top:18px; text-shadow:0 0 10px var(--accent);}
+    .brand{display:block; margin:14px auto 6px; width:160px; height:160px;
+      object-fit:cover; border-radius:16px; box-shadow:0 0 20px var(--glow);}
+
+    .card{
+      background:var(--card-bg);
+      border:1px solid rgba(123,92,255,0.14);
+      border-radius:var(--radius);
+      padding:14px; margin:12px 0;
+      box-shadow:0 6px 20px rgba(0,0,0,0.6);
+    }
+    .muted{color:var(--muted); font-size:13px;}
+
+    .qris-wrap{display:flex; flex-direction:column; align-items:center; gap:8px;}
+    .qris-img{width:220px; max-width:90%; border-radius:10px; box-shadow:0 0 20px var(--glow); cursor:pointer;}
+
+    .pay-row{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:8px; padding:10px; border-radius:10px; background:var(--glass);
+      margin:8px 0;
+    }
+    .method-name{font-weight:700;}
+    .small{font-size:13px; color:var(--muted);}
+
+    button.copy-btn{
+      background:var(--accent); color:white;
+      border:none; padding:8px 12px; border-radius:10px;
+      cursor:pointer; font-weight:700;
+    }
+    button.copy-btn:active{transform:translateY(1px)}
+
+    .footer{margin-top:18px; font-size:13px; color:var(--muted);}
+
+    /* SPLASH */
+    #splash{
+      position:fixed; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      z-index:999;
+      background:linear-gradient(135deg,#2b0066,#001f66);
+      animation:fadeOut 1s ease forwards;
+      animation-delay:2.5s;
+    }
+    .splash-content{text-align:center; color:#fff;}
+    .splash-content h1{font-size:28px; margin:0 0 8px; text-shadow:0 0 14px #7b5cff;}
+    .splash-content p{font-size:18px; color:#aaddff; margin:0;}
+    @keyframes fadeOut{to{opacity:0; visibility:hidden}}
+
+    /* STAR BACKGROUND */
+    #stars{
+      position:fixed; inset:0;
+      z-index:0;
+      overflow:hidden;
+      pointer-events:none;
+    }
+    .star{
+      position:fixed;
+      border-radius:50%;
+      opacity:0.8;
+      animation: twinkle 3s infinite alternate, moveStars linear infinite;
+      pointer-events:none;
+    }
+    @keyframes twinkle{
+      from{opacity:0.2;}
+      to{opacity:1;}
+    }
+    @keyframes moveStars{
+      from{transform:translateY(0);}
+      to{transform:translateY(100vh);}
+    }
+
+    /* TOAST NOTIFICATION */
+    #toast {
+      visibility: hidden;
+      min-width: 220px;
+      background: rgba(40,0,90,0.9);
+      color: #cce6ff;
+      text-align: center;
+      border-radius: 10px;
+      padding: 12px;
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      font-size: 14px;
+      box-shadow: 0 0 15px #4dc3ff;
+      opacity: 0;
+      transition: opacity 0.5s, bottom 0.5s;
+    }
+    #toast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 50px;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- SPLASH -->
+  <div id="splash" aria-hidden="true">
+    <div class="splash-content">
+      <h1>Selamat Datang Di</h1>
+      <p>PAYMENT VALE</p>
+    </div>
+  </div>
+
+  <!-- Stars -->
+  <div id="stars"></div>
+
+  <main>
+    <h1 id="page-title">VALE PAYMENT</h1>
+
+    <!-- Logo -->
+    <img src="https://raw.githubusercontent.com/typographuniverse/uploader-Jagpro/main/Uploads/file-1766412614748.jpeg" alt="Arman Logo" class="brand" />
+
+    <!-- Metode Pembayaran (dipindah ke atas) -->
+    <section class="card">
+      <h3>Metode Pembayaran</h3>
+
+      <div class="pay-row">
+        <div>
+          <div class="method-name">DANA</div>
+          <div class="small">Atas nama: NANXX LESXXXX</div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <div class="small">085199187973</div>
+          <button class="copy-btn" onclick="copyText('085199187973')">Salin</button>
+        </div>
+      </div>
+
+      <div class="pay-row">
+        <div>
+          <div class="method-name">SEABANK</div>
+          <div class="small">Atas nama: NANXX LESXXXX</div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <div class="small">901336870909</div>
+          <button class="copy-btn" onclick="copyText('901336870909')">Salin</button>
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top:8px">
+        Wajib kirimkan bukti pembayaran, Tanpa bukti pembayaran, produk tidak bisa diproses.
+      </p>
+    </section>
+
+    <!-- Pembayaran QRIS (dipindah ke bawah + klik buka gambar) -->
+    <section class="card">
+      <h2>PEMBAYARAN QRIS</h2>
+      <div class="qris-wrap">
+        <img src="https://i.ibb.co.com/mdmm4r3/IMG-20260314-WA0392.jpg" 
+             alt="Kode QRIS" 
+             class="qris-img" 
+             onclick="openQris(this.src)" />
+        <p class="muted">Klik / Pindai QRIS di atas untuk menyelesaikan pembayaran.</p>
+      </div>
+    </section>
+
+    <div class="footer">&copy; <span id="year"></span> RIAN-SAMA Halaman Pembayaran</div>
+  </main>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <!-- PETUNJUK MUSIK -->
+<div style="
+position:fixed;
+bottom:100px;
+right:20px;
+background:rgba(0,0,0,0.6);
+color:#cce6ff;
+padding:6px 10px;
+border-radius:8px;
+font-size:12px;
+box-shadow:0 0 10px #4dc3ff;
+z-index:9999;
+" id="musicHint">
+Klik ikon musik di pojok kanan bawah 🎵
+</div>
+
+<script>
+setTimeout(function(){
+  document.getElementById("musicHint").style.display="none";
+},7000);
+</script>
+  
+<!-- MUSIC PLAYER -->
+<audio id="lagu">
+  <source src="https://files.catbox.moe/jsvqqr.mp3" type="audio/mpeg">
+</audio>
+
+<img id="coverMusic"
+src="https://i.ibb.co.com/0R9PF29S/0dd3b86514889f47fe68443e9e7e69b6-avf.avif">
+
+<style>
+#coverMusic{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  z-index:9999;
+}
+
+.spin{
+  animation: putar 3s linear infinite;
+}
+
+@keyframes putar{
+  from{transform: rotate(0deg);}
+  to{transform: rotate(360deg);}
+}
+</style>
+
+<script>
+const lagu = document.getElementById("lagu");
+const cover = document.getElementById("coverMusic");
+
+cover.onclick = function(){
+  if(lagu.paused){
+    lagu.play();
+    cover.classList.add("spin");
+  }else{
+    lagu.pause();
+    cover.classList.remove("spin");
+  }
+}
+</script>
+  
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function copyText(text){
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(()=>{
+          showToast("Nomor " + text + " berhasil disalin!");
+        }).catch(()=>{
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text){
+      let textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = 0;
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast("Nomor " + text + " berhasil disalin!");
+      } catch (err) {
+        showToast("Gagal menyalin, salin manual: " + text);
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function showToast(msg){
+      let toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.className = "show";
+      setTimeout(()=>{ toast.className = toast.className.replace("show", ""); }, 3000);
+    }
+
+    // fungsi buka gambar QRIS
+    function openQris(src){
+      window.open(src, "_blank");
+    }
+
+    // splash fallback
+    setTimeout(()=>{ 
+      const s=document.getElementById('splash'); 
+      if(s) s.style.display='none'; 
+    }, 4000);
+
+    // generate stars warna-warni
+    const colors = ["white","#aaddff","#c77dff"];
+    for (let i = 0; i < 150; i++) {
+      let star = document.createElement("div");
+      star.className = "star";
+      let size = Math.random() * 3 + "px";
+      star.style.width = size;
+      star.style.height = size;
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.background = colors[Math.floor(Math.random()*colors.length)];
+      star.style.animationDuration = (Math.random() * 10 + 5) + "s";
+      document.getElementById("stars").appendChild(star);
+    }
+  </script>
+</body>
+</html>
